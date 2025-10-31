@@ -10,29 +10,27 @@ import frc.robot.subsystems.CANRollerSubsystem;
 
 // Command to run the roller with joystick inputs
 public class SingleValueRollerCommand extends Command {
-  private final double forward;
-  private final double reverse;
+  private final double speed;
   // private final CANRollerSubsystem rollerSubsystem;
   private final CANRollerSubsystem rollerSubsystem;
 
   public SingleValueRollerCommand(
-        CANRollerSubsystem rollerSubsystem) {
-    this.forward = RollerConstants.ROLLER_EJECT_VALUE;
-    this.reverse = 0;
-    this.rollerSubsystem = rollerSubsystem;
-
-    addRequirements(this.rollerSubsystem);
+        CANRollerSubsystem rollerSubsystem, double speed) {
+        this.speed = speed;
+        this.rollerSubsystem = rollerSubsystem;
+        addRequirements(this.rollerSubsystem);
   }
 
   @Override
   public void initialize() {
+    System.out.println("Started");
   }
 
   // Runs every cycle while the command is scheduled (~50 times per second)
   @Override
   public void execute() {
     // Run the roller motor at the desired speed
-    rollerSubsystem.runRoller(forward, reverse);
+    rollerSubsystem.speedRunRoller(speed);
   }
 
   // Runs each time the command ends via isFinished or being interrupted.
